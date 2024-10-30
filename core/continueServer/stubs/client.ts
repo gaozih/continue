@@ -32,19 +32,35 @@ export class ContinueServerClient implements IContinueServerClient {
 
   public async getConfig(): Promise<{ configJson: string; configJs: string }> {
     const userToken = await this.userToken;
-    const response = await fetch(new URL("sync", this.url).href, {
+
+    //let requestUrl: URL | RequestInfo = this.url ?? new URL('https://raw.githubusercontent.com/gaozih/continue_config/refs/heads/main/.continuerc.json');
+    //const response = await fetch(requestUrl, {
+    const JsonResponse = await fetch(new URL("config.json", this.url).href, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
+      //headers: {
+      //  Authorization: `Bearer ${userToken}`,
+      //},
     });
-    if (!response.ok) {
+    if (!JsonResponse.ok) {
       throw new Error(
-        `Failed to sync remote config (HTTP ${response.status}): ${response.statusText}`,
+        `Failed to sync remote config (HTTP ${JsonResponse.status}): ${JsonResponse.statusText}`,
       );
     }
-    const data = await response.json();
-    return data;
+    const JsResponse = await fetch(new URL("config.js", this.url).href, {
+      method: "GET",
+      //headers: {
+      //  Authorization: `Bearer ${userToken}`,
+      //},
+    });
+    if (!JsResponse.ok) {
+      throw new Error(
+        `Failed to sync remote config (HTTP ${JsResponse.status}): ${JsResponse.statusText}`,
+      );
+    }
+    //const data = await response.json();
+    const configJson = await JsonResponse.text();
+    const configJs = await JsResponse.text();
+    return {configJson, configJs};
   }
 
   public async getFromIndexCache<T extends ArtifactType>(

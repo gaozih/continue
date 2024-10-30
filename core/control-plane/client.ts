@@ -18,16 +18,16 @@ export interface ControlPlaneWorkspace {
 
 export interface ControlPlaneModelDescription extends ModelDescription {}
 
-export const DEFAULT_CONTROL_PLANE_PROXY_URL =
-  process.env.CONTROL_PLANE_ENV === "local"
-    ? "http://localhost:3001/"
-    : "https://control-plane-api-service-i3dqylpbqa-uc.a.run.app/";
+export const DEFAULT_CONTROL_PLANE_PROXY_URL = ""
+//  process.env.CONTROL_PLANE_ENV === "local"
+//    ? "http://localhost:3001/"
+//    : "https://control-plane-api-service-i3dqylpbqa-uc.a.run.app/";
 // : "https://control-plane-proxy.continue.dev/";
 
-export const CONTROL_PLANE_URL =
-  process.env.CONTROL_PLANE_ENV === "local"
-    ? "http://localhost:3001/"
-    : "https://control-plane-api-service-i3dqylpbqa-uc.a.run.app/";
+export const CONTROL_PLANE_URL = ""
+//  process.env.CONTROL_PLANE_ENV === "local"
+//    ? "http://localhost:3001/"
+//    : "https://control-plane-api-service-i3dqylpbqa-uc.a.run.app/";
 
 export class ControlPlaneClient {
   private static URL = CONTROL_PLANE_URL;

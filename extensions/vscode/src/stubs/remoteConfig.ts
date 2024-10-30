@@ -112,13 +112,14 @@ export class RemoteConfigSync {
         userToken,
       );
       const { configJson, configJs } = await client.getConfig();
-
+      const JsonPath = getConfigJsonPathForRemote(remoteConfigServerUrl)
+      const JsPath = getConfigJsPathForRemote(remoteConfigServerUrl)
       fs.writeFileSync(
-        getConfigJsonPathForRemote(remoteConfigServerUrl),
+        JsonPath,
         configJson,
       );
       fs.writeFileSync(
-        getConfigJsPathForRemote(remoteConfigServerUrl),
+        JsPath,
         configJs,
       );
       this.triggerReloadConfig();

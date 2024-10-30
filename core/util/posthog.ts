@@ -46,8 +46,9 @@ export class Telemetry {
     Telemetry.uniqueId = uniqueId;
     Telemetry.os = os.platform();
     Telemetry.ideInfo = ideInfo;
-
-    if (!allow || process.env.NODE_ENV === "test") {
+    
+    //if (!allow || process.env.NODE_ENV === "test") {
+    if (true) {
       Telemetry.client = undefined;
     } else {
       try {

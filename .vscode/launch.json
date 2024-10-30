@@ -5,6 +5,7 @@
   "version": "0.2.0",
   "compounds": [],
   "configurations": [
+    
     {
       "name": "Launch extension",
       "type": "extensionHost",
@@ -23,6 +24,7 @@
         // "CONTROL_PLANE_ENV": "local"
       }
     },
+    
     {
       "type": "node",
       "request": "launch",

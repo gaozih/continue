@@ -32,7 +32,8 @@ class ContinueAuthService {
         private const val REFRESH_TOKEN_KEY = "ContinueRefreshToken"
         private const val ACCOUNT_ID_KEY = "ContinueAccountId"
         private const val ACCOUNT_LABEL_KEY = "ContinueAccountLabel"
-        private const val CONTROL_PLANE_URL = "https://control-plane-api-service-i3dqylpbqa-uc.a.run.app"
+        private const val CONTROL_PLANE_URL = ""
+//        private const val CONTROL_PLANE_URL = "https://control-plane-api-service-i3dqylpbqa-uc.a.run.app"
 //        private const val CONTROL_PLANE_URL = "http://localhost:3001"
     }
 
