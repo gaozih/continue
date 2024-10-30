@@ -2,7 +2,7 @@
   "name": "continue",
   "icon": "media/icon.png",
   "author": "Continue Dev, Inc / Zijing",
-  "version": "0.8.67",
+  "version": "0.8.73",
   "repository": {
     "type": "git",
     "url": "https://github.com/gaozih/continue"
@@ -111,8 +111,8 @@
         },
         "continue.remoteConfigServerUrl": {
           "type": "string",
-          "default": "https://raw.githubusercontent.com/gaozih/continue_config/refs/heads/main/",
-          "markdownDescription": "如果您的团队设置为使用共享配置，请在此处输入服务器URL，并在下方输入您的用户令牌以启用自动同步。默认值：https://raw.githubusercontent.com/gaozih/continue_config/refs/heads/main/"
+          "default": "https://gitee.com/xxxziheng/continue_config/raw/master/",
+          "markdownDescription": "如果您的团队设置为使用共享配置，请在此处输入服务器URL，并在下方输入您的用户令牌以启用自动同步。默认值：https://gitee.com/xxxziheng/continue_config/raw/master/"
         },
         "continue.userToken": {
           "type": "string",

@@ -12,11 +12,13 @@ export const DEFAULT_CHAT_MODEL_CONFIG: ModelDescription = {
   title: "Claude 3.5 Sonnet",
 };
 
+
 export const DEFAULT_AUTOCOMPLETE_MODEL_CONFIG: ModelDescription = {
-  title: "Codestral",
-  provider: "mistral",
-  model: "codestral-latest",
+  title: "AutoCompleteModel",
+  provider: "openai",
+  model: "codegeex4:9b",
   apiKey: "",
+  apiBase: "http://localhost:3333"
 };
 
 export const FREE_TRIAL_MODELS: ModelDescription[] = [
@@ -109,30 +111,32 @@ export const defaultSlashCommandsJetBrains = [
 ];
 
 export const defaultConfig: SerializedContinueConfig = {
-  models: [DEFAULT_CHAT_MODEL_CONFIG],
+  //models: [DEFAULT_CHAT_MODEL_CONFIG],
+  models: [],
   tabAutocompleteModel: DEFAULT_AUTOCOMPLETE_MODEL_CONFIG,
   customCommands: [
-    {
-      name: "test",
-      prompt:
-        "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
-      description: "Write unit tests for highlighted code",
-    },
+  //  {
+  //    name: "test",
+  //    prompt:
+  //      "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+  //    description: "Write unit tests for highlighted code",
+  //  },
   ],
   contextProviders: defaultContextProvidersVsCode,
   slashCommands: defaultSlashCommandsVscode,
 };
 
 export const defaultConfigJetBrains: SerializedContinueConfig = {
-  models: [DEFAULT_CHAT_MODEL_CONFIG],
+  //models: [DEFAULT_CHAT_MODEL_CONFIG],
+  models: [],
   tabAutocompleteModel: DEFAULT_AUTOCOMPLETE_MODEL_CONFIG,
   customCommands: [
-    {
-      name: "test",
-      prompt:
-        "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
-      description: "Write unit tests for highlighted code",
-    },
+  //  {
+  //    name: "test",
+  //    prompt:
+  //      "{{{ input }}}\n\nWrite a comprehensive set of unit tests for the selected code. It should setup, run tests that check for correctness including important edge cases, and teardown. Ensure that the tests are complete and sophisticated. Give the tests just as chat output, don't edit any file.",
+  //    description: "Write unit tests for highlighted code",
+  //  },
   ],
   contextProviders: defaultContextProvidersJetBrains,
   slashCommands: defaultSlashCommandsJetBrains,
