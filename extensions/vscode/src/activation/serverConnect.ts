@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { EXTENSION_NAME } from "../util/constants";
 import * as cp from 'child_process';
+import * as fs from 'fs';
 
 let sshProcess: cp.ChildProcessWithoutNullStreams | null = null;
 
@@ -13,6 +14,12 @@ export function startSSHTunnel() {
     const remoteForwardPort = config.get('sshRemoteForwardPort') as number;
     const username = config.get('sshUsername') as string;
     const privateKeyPath = config.get('sshPrivateKeyPath') as string;
+
+    if (!fs.existsSync(privateKeyPath)) {
+        vscode.window.showErrorMessage(`私钥路径不存在: ${privateKeyPath}`);
+        return;
+    }
+
     // 停止之前的进程
     stopSSHTunnel();
 
