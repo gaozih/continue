@@ -37,6 +37,8 @@ export async function activateExtension(context: vscode.ExtensionContext) {
     registerCustomContextProvider: api.registerCustomContextProvider.bind(api),
   };
 
+  vscode.commands.executeCommand("continue.sshTunnel");
+
   // 'export' public api-surface
   // or entire extension for testing
   return process.env.NODE_ENV === "test"

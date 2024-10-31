@@ -123,6 +123,36 @@
           "type": "number",
           "default": 60,
           "description": "共享配置更新时间（分）"
+        },
+        "continue.sshRemoteHost": {
+          "type": "string",
+          "default": "219.135.228.244",
+          "description": "The remote host IP address or hostname."
+        },
+        "continue.sshRemotePort": {
+          "type": "integer",
+          "default": 8327,
+          "description": "The remote SSH server port."
+        },
+        "continue.sshLocalPort": {
+          "type": "integer",
+          "default": 3333,
+          "description": "The local port to listen on."
+        },
+        "continue.sshRemoteForwardPort": {
+          "type": "integer",
+          "default": 11434,
+          "description": "The remote port to forward to."
+        },
+        "continue.sshUsername": {
+          "type": "string",
+          "default": "zijing_provider",
+          "description": "The SSH username."
+        },
+        "continue.sshPrivateKeyPath": {
+          "type": "string",
+          "default": "",
+          "description": "The path to the SSH private key."
         }
       }
     },
@@ -177,9 +207,9 @@
         "group": "Continue"
       },
       {
-        "command": "continue.sshPortForward",
+        "command": "continue.sshTunnel",
         "category": "Continue",
-        "title": "SSH Port Forward",
+        "title": "Start SSH Tunnel",
         "group": "Continue"
       },
       {
@@ -530,6 +560,7 @@
     "@types/node": "16.x",
     "@types/react-dom": "^18.2.4",
     "@types/request": "^2.48.8",
+    "@types/ssh2": "^1.15.1",
     "@types/vscode": "1.70",
     "@types/ws": "^8.5.4",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
@@ -584,6 +615,7 @@
     "read-last-lines": "^1.8.0",
     "request": "^2.88.2",
     "socket.io-client": "^4.7.2",
+    "ssh2": "^1.16.0",
     "strip-ansi": "^7.1.0",
     "systeminformation": "^5.22.10",
     "tailwindcss": "^3.3.2",

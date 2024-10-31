@@ -32,6 +32,7 @@ import { EXTENSION_NAME } from "./util/constants";
 import { getFullyQualifiedPath } from "./util/util";
 import { uriFromFilePath } from "./util/vscode";
 import type { VsCodeWebviewProtocol } from "./webviewProtocol";
+import { startSSHTunnel } from "./activation/serverConnect"
 
 let fullScreenPanel: vscode.WebviewPanel | undefined;
 
@@ -704,6 +705,15 @@ const commandsMap: (
         client.sendFeedback(feedback, lastLines);
       }
     },
+    'continue.sshTunnel': async () => {
+        try {
+            await startSSHTunnel();
+            console.log('端口转发已在后台启动');
+            // 这里可以继续执行其他函数
+        } catch (err) {
+            vscode.window.showErrorMessage(`启动端口转发失败: ${err}`);
+        }
+    }
   };
 };
 
@@ -739,3 +749,5 @@ export function registerAllCommands(
     );
   }
 }
+
+
