@@ -146,17 +146,31 @@ function checkWebpageAccessible() {
     const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
     const port = config.get('sshLocalPort') as number;
     const url = `http://localhost:${port}/v1/`;
+
+    const url2 = `http://localhost:${port+1}/v1/`;
     https.get(url, (res) => {
         if(res.statusCode == 404){
             console.log(`Port ${port} is in use`)
+            outputChannel.appendLine(`Port ${port} is in use`);
         }
-        outputChannel.appendLine(`res: ${res}`);
+        outputChannel.appendLine(`other res: ${res}`);
     }).on('error', (err) => {
         console.log(`Port ${port} is free`);
         outputChannel.appendLine(`error: ${err}`);
         vscode.commands.executeCommand("continue.sshTunnel");
     });
+    https.get(url2, (res) => {
+        if(res.statusCode == 404){
+            console.log(`Port2 ${port} is in use`)
+            outputChannel.appendLine(`Port2 ${port} is in use`);
+        }
+        outputChannel.appendLine(`other res2: ${res}`);
+    }).on('error', (err) => {
+        console.log(`Port2 ${port} is free`);
+        outputChannel.appendLine(`error2: ${err}`);
+    });
 }
 
 //setInterval(checkPort, 10000);
-setInterval(checkPortviaCurl, 20000)
+//setInterval(checkPortviaCurl, 20000)
+setInterval(checkWebpageAccessible, 10000)
