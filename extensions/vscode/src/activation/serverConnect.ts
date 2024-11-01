@@ -107,4 +107,31 @@ function checkPort() {
     });
 }
 
-setInterval(checkPort, 10000);
+function checkPortviaCurl() {
+    const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
+    const port = config.get('sshLocalPort') as number;
+    cp.exec(`curl -s http://localhost:${port}/v1/`, (error, stdout, stderr) =>{
+        if (error)
+        {
+            console.error(error);
+            outputChannel.appendLine(`Linstening Error: Port ${port} is ${error}`);
+            vscode.commands.executeCommand("continue.sshTunnel");
+            return;
+        }
+        const isRunning = stdout.includes("404");
+        if (isRunning) {
+            console.log(`Port ${port} is in use`);
+            outputChannel.appendLine(`Linstening: Port ${port} is in use, test: ${stdout}`);
+            return;
+        }else{
+            console.log(`Port ${port} is free`);
+            outputChannel.appendLine(`Linstening: Port ${port} is unused, test: ${stdout}`);
+            // 端口未被占用，执行VS Code命令
+            vscode.commands.executeCommand("continue.sshTunnel");
+            
+        }
+    });
+}
+
+//setInterval(checkPort, 10000);
+setInterval(checkPortviaCurl, 20000)
