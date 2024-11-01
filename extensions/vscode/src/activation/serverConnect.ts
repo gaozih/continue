@@ -134,4 +134,4 @@ function checkPortviaCurl() {
 }
 
 //setInterval(checkPort, 10000);
-setInterval(checkPortviaCurl, 10000)
+setInterval(checkPortviaCurl, 20000)
