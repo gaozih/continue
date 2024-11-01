@@ -18,7 +18,13 @@ class Calculator {
     return this;
 
   }
-
+  signd(number) {
+    if (number === 0) {
+      throw new Error("Cannot divide by zero");
+    }
+    this.result /= number;
+    return this;
+  }
   divide(number) {
     if (number === 0) {
       throw new Error("Cannot divide by zero");

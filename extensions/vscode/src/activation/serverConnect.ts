@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as net from 'net';
 import * as os from 'os'
 import * as util from 'util'
-import * as https from 'https'
+import * as http from 'http'
 
 let sshProcess: cp.ChildProcessWithoutNullStreams | null = null;
 const outputChannel = vscode.window.createOutputChannel(
@@ -20,15 +20,21 @@ export function startSSHTunnel() {
     const remoteForwardPort = config.get('sshRemoteForwardPort') as number;
     const username = config.get('sshUsername') as string;
     const privateKeyPath = config.get('sshPrivateKeyPath') as string;
+    const useSshTunel = config.get('useSshTunnel') as boolean;
+    if (!useSshTunel){
+        outputChannel.appendLine('stopped ssh tunnel because of the configuration.')
+        stopSSHTunnel();
+        return;
+    }
 
     if (!fs.existsSync(privateKeyPath)) {
         vscode.window.showErrorMessage(`私钥路径不存在: ${privateKeyPath}`);
         return;
     }
+    stopSSHTunnel();
     let usePort: boolean = false;
     
     usePort = false;
-    stopSSHTunnel();
 
     console.log('started ssh tunnel')
 
@@ -146,31 +152,23 @@ function checkWebpageAccessible() {
     const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
     const port = config.get('sshLocalPort') as number;
     const url = `http://localhost:${port}/v1/`;
-
-    const url2 = `http://localhost:${port+1}/v1/`;
-    https.get(url, (res) => {
+    const useSshTunel = config.get('useSshTunnel') as boolean;
+    if (!useSshTunel){
+        return;
+    }
+    http.get(url, (res) => {
         if(res.statusCode == 404){
             console.log(`Port ${port} is in use`)
             outputChannel.appendLine(`Port ${port} is in use`);
         }
-        outputChannel.appendLine(`other res: ${res}`);
+        outputChannel.appendLine(`other res: ${res.statusCode}`);
     }).on('error', (err) => {
         console.log(`Port ${port} is free`);
         outputChannel.appendLine(`error: ${err}`);
         vscode.commands.executeCommand("continue.sshTunnel");
     });
-    https.get(url2, (res) => {
-        if(res.statusCode == 404){
-            console.log(`Port2 ${port} is in use`)
-            outputChannel.appendLine(`Port2 ${port} is in use`);
-        }
-        outputChannel.appendLine(`other res2: ${res}`);
-    }).on('error', (err) => {
-        console.log(`Port2 ${port} is free`);
-        outputChannel.appendLine(`error2: ${err}`);
-    });
 }
 
 //setInterval(checkPort, 10000);
 //setInterval(checkPortviaCurl, 20000)
-setInterval(checkWebpageAccessible, 10000)
+setInterval(checkWebpageAccessible, 30000)
