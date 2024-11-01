@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as net from 'net';
 import * as os from 'os'
 import * as util from 'util'
+import * as https from 'https'
 
 let sshProcess: cp.ChildProcessWithoutNullStreams | null = null;
 const outputChannel = vscode.window.createOutputChannel(
@@ -110,7 +111,15 @@ function checkPort() {
 function checkPortviaCurl() {
     const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
     const port = config.get('sshLocalPort') as number;
-    cp.exec(`curl -s http://localhost:${port}/v1/`, (error, stdout, stderr) =>{
+    let command;
+    if (os.platform() === 'win32') {
+      // Windows平台使用findstr
+      command = `curl http://localhost:${port}/v1/`;
+    } else {
+      // macOS和Linux平台使用grep
+      command = `curl -s http://localhost:${port}/v1/`;
+    }
+    cp.exec(``, (error, stdout, stderr) =>{
         if (error)
         {
             console.error(error);
@@ -130,6 +139,22 @@ function checkPortviaCurl() {
             vscode.commands.executeCommand("continue.sshTunnel");
             
         }
+    });
+}
+
+function checkWebpageAccessible() {
+    const config = vscode.workspace.getConfiguration(EXTENSION_NAME);
+    const port = config.get('sshLocalPort') as number;
+    const url = `http://localhost:${port}/v1/`;
+    https.get(url, (res) => {
+        if(res.statusCode == 404){
+            console.log(`Port ${port} is in use`)
+        }
+        outputChannel.appendLine(`res: ${res}`);
+    }).on('error', (err) => {
+        console.log(`Port ${port} is free`);
+        outputChannel.appendLine(`error: ${err}`);
+        vscode.commands.executeCommand("continue.sshTunnel");
     });
 }
 
